@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         width: '100%', // Asegúrate de que la imagen de fondo cubra toda la pantalla
         height: '100%', // Asegúrate de que la imagen de fondo cubra toda la pantalla
     },
+
     page: {
         flexDirection: 'column',
         alignItems: 'center'

@@ -15,12 +15,12 @@ const TeachersScreen = () => {
 
 
     const getTeachers = async () => {
-        const response = await axios.get('http://192.168.3.9:3000/api/teachers');
+        const response = await axios.get('http://192.168.56.1:3000/api/teachers');
         setTeachers(response.data)
     }
 
     const deleteTeacher = async (idUsuarios) => {
-        const result = await axios.delete('http://192.168.3.9:3000/api/teachers/' + idUsuarios)
+        const result = await axios.delete('http://192.168.56.1:3000/api/teachers/' + idUsuarios)
         getTeachers()
     }
 

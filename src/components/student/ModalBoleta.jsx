@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, Pressable, TextInput, Alert } from 'react-native';
+import { Modal, StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
+import { useAuthStore } from '../auth/authStore';
 
+/*
+interface ModalProps {
+    visible: boolean,
+    onHide: () => void,
+    getData: () => void
+}
+*/
 
-const ModalUpdateClass = ({ visible, onHide, getClasses, id }) => {
+const ModalBoleta = ({ visible, onHide, getData }) => {
 
-    const [nombre, setNombre] = useState('');
-
+    const [boleta, setBoleta] = useState('')
+    const id = useAuthStore.getState().user?.id_usuario;
 
     const handleSubmit = async () => {
-
-        const classData = {
-            nombre,
-            idCurso: id
-        };
-
-        try {
-            console.log(classData)
-            const response = await axios.put('http://192.168.56.1:3000/api/classes', classData);
-            if (response.data.message === 'Modificado exitosamente') {
-                Alert.alert('Exito', 'Actualizado exitosamente');
-                onHide();
-                getClasses()
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'Hubo un problema al intentar actualizar la clase');
+        console.log(boleta)
+        const result = await axios.patch(`http://192.168.56.1:3000/api/students/${id}`, {
+            boleta: Number(boleta),
+            id: Number(id)
+        })
+        if (result.status == 200) {
+            getData()
+            onHide()
         }
     };
 
@@ -40,15 +39,21 @@ const ModalUpdateClass = ({ visible, onHide, getClasses, id }) => {
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <View style={styles.form}>
-                        <View style={styles.closeBtn}>
+                        {/*<View style={styles.closeBtn}>
                             <Pressable onPress={() => onHide()}>
                                 <AntDesign name="close" size={24} color="black" />
                             </Pressable>
+                        </View>*/
+                        }
+                        <View>
+                            <Text>{id}</Text>
                         </View>
-                        <Text style={styles.h1}>Actualizar clase</Text>
-                        <TextInput style={styles.txtIpt} placeholder='Nombre' onChangeText={setNombre} />
+                        <Text style={styles.h1}>Inserta tu número de boleta</Text>
+                        <TextInput style={styles.txtIpt} placeholder='Boleta' onChangeText={setBoleta} />
+
+
                         <Pressable style={styles.addBtn} onPress={handleSubmit}>
-                            <Text style={styles.addTxtBtn}>Salvar cambios</Text>
+                            <Text style={styles.addTxtBtn}>Salvar</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
         padding: 20,
         width: '95%',
         borderRadius: 10,
-        marginTop: 40
+        marginTop: 200
     },
     closeBtn: {
         flexDirection: 'row',
@@ -102,4 +107,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ModalUpdateClass;
+export default ModalBoleta;

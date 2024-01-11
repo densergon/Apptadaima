@@ -53,7 +53,7 @@ const ModalAddHomework = ({ visible, onHide, getData }: ModalProps) => {
 
   const HandleSubmit = async () => {
     try {
-      await axios.post('http://192.168.3.9:3000/api/homeworks', Homework);
+      await axios.post('http://192.168.56.1:3000/api/homeworks', Homework);
       getData()
       onHide()
     } catch (error) {

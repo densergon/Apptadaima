@@ -18,7 +18,7 @@ const ModalEditTeacher = ({ visible, onHide, getTeachers, id }) => {
     }
     useEffect(() => {
         if (id != null) {
-            fetch(`http://192.168.3.9:3000/api/teachers/${id}`)
+            fetch(`http://192.168.56.1:3000/api/teachers/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     setNombre(data.nombre);
@@ -50,7 +50,7 @@ const ModalEditTeacher = ({ visible, onHide, getTeachers, id }) => {
         };
         //nombre, apellidoPaterno, apellidoMaterno, email, password
         try {
-            const response = await axios.put(`http://192.168.3.9:3000/api/teachers/${id}`, teacherData);
+            const response = await axios.put(`http://192.168.56.1:3000/api/teachers/${id}`, teacherData);
             if (response.data.message === 'Usuario actualizado') {
                 Alert.alert('Exito', 'Profesor actualizado correctamente');
                 getTeachers()

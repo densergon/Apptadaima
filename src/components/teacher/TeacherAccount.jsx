@@ -8,14 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
-interface User {
-    idUsuarios: number,
-    nombre: string,
-    apellidoPaterno: string,
-    apellidoMaterno: string,
-    email: string
-}
-
 
 const Account = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -24,7 +16,7 @@ const Account = () => {
     const focused = useIsFocused()
     const getData = async () => {
         try {
-            const response = await axios.get(`http://192.168.3.9:3000/api/teachers/${userId}`)
+            const response = await axios.get(`http://192.168.56.1:3000/api/teachers/${userId}`)
             setUser(response.data);
             setIsLoading(false);
         } catch (error) {

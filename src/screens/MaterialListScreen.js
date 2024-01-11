@@ -1,11 +1,9 @@
-import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Pressable, StyleSheet, ScrollView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AntDesign, Feather } from '@expo/vector-icons';
 import axios from 'axios';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import AddMaterial from '../components/teacher/AddMaterial';
-
-
 
 const MaterialListScreen = ({ route }) => {
     const focused = useIsFocused()
@@ -33,6 +31,15 @@ const MaterialListScreen = ({ route }) => {
             console.log(error)
         }
     }
+    const navigation = useNavigation()
+
+    const showFile = (uri) => {
+        if (Platform.OS === 'web') {
+            window.open(uri, '_blank')
+        } else {
+            navigation.navigate('MaterialDisplay')
+        }
+    }
 
     return (
         <ScrollView>
@@ -40,14 +47,9 @@ const MaterialListScreen = ({ route }) => {
                 <AddMaterial getData={() => getMateriales()} id={id} />
                 {materiales.map((material) =>
                     <View key={material.idMateriales} style={styles.materialItem}>
-                        <Link href={{
-                            pathname: "/teacher/teacherMaterial/[id]",
-                            params: { id: Number(material.idMateriales) }
-                        }} asChild>
-                            <Pressable>
-                                <Text style={styles.materialName}>{material.nombre}</Text>
-                            </Pressable>
-                        </Link>
+                        <Pressable onPress={() => showFile(material.uri)}>
+                            <Text style={styles.materialName}>{material.nombre}</Text>
+                        </Pressable>
                         <Pressable style={styles.delBtn} onPress={() => deleteMaterial(Number(material.idMateriales))}>
                             <Feather name="trash" size={24} color="white" />
                         </Pressable>

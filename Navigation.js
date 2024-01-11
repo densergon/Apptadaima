@@ -16,6 +16,7 @@ import WelcomeScreen from "./src/screens/WelcomeScreen"
 import { AntDesign } from '@expo/vector-icons';
 import CourseScreen from "./src/screens/CourseScreen";
 import MaterialListScreen from "./src/screens/MaterialListScreen";
+import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -43,6 +44,13 @@ function MyDrawer() {
                     height: 0
                 },
                 title: 'Lista de Materiales'
+            }} />
+            <Drawer.Screen name="MaterialDisplay" component={DisplayMaterialScreen} initialParams={{ id: 1 }} options={{
+                drawerLabel: '',
+                drawerLabelStyle: {
+                    height: 0
+                },
+                title: ''
             }} />
             <Drawer.Screen name="Welcome" component={WelcomeScreen} options={{
                 drawerLabel: '',

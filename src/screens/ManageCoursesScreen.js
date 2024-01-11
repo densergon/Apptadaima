@@ -52,7 +52,7 @@ const ManageCoursesScreen = () => {
             <View>
                 {clases.map((clase) => (
                     <View key={clase.idCurso} style={style.class}>
-                        <Pressable onPress={() => navigation.navigate('ListaMateriales', {
+                        <Pressable onPress={() => navigation.navigate('Curso', {
                             id: clase.idCurso
                         })}>
                             <Text style={style.p}>{clase.curso}</Text>

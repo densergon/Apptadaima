@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import axios from 'axios';
 import { StyleSheet } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,6 +12,7 @@ const CourseScreen = ({ route }) => {
 
     const focused = useIsFocused()
     const { id } = route.params;
+    const navigation = useNavigation()
     const [curso, setCurso] = useState({ curso: '', idCurso: 0 });
 
     const getClass = async () => {

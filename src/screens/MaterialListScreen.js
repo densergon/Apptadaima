@@ -11,7 +11,7 @@ const MaterialListScreen = ({ route }) => {
     const [materiales, setMateriales] = useState([])
     const getMateriales = async () => {
         try {
-            const { data } = await axios.get(`http://192.168.3.9:3000/api/materiales/all/${id}`);
+            const { data } = await axios.get(`http://192.168.56.1:3000/api/materiales/all/${id}`);
             setMateriales(data)
         } catch (error) {
             console.log(error)
@@ -23,7 +23,7 @@ const MaterialListScreen = ({ route }) => {
 
     const deleteMaterial = async (idM) => {
         try {
-            const response = await axios.delete(`http://192.168.3.9:3000/api/materiales/${idM}`)
+            const response = await axios.delete(`http://192.168.56.1:3000/api/materiales/${idM}`)
             if (response.status == 200) {
                 getMateriales()
             }
@@ -61,6 +61,7 @@ const MaterialListScreen = ({ route }) => {
 }
 
 export default MaterialListScreen
+
 
 const styles = StyleSheet.create({
     h1: {

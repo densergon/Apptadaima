@@ -7,13 +7,13 @@ const HomeScreen = () => {
         <SafeAreaView style={styles.container}>
             <Text>HomeScreen</Text>
             <Link to={{ screen: 'Profesores' }}>
-                Admin
+                Profesores
             </Link>
             <Link to={{ screen: 'Cursos' }}>
-                Teacher
+                Cursos
             </Link>
             <Link to={{ screen: 'Profesores' }}>
-                Student
+                Profesores
             </Link>
         </SafeAreaView>
     )

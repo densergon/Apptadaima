@@ -5,7 +5,6 @@ import { styles } from "../../styles/Login.styles";
 import Img from '../../../assets/img/hollowprofile.jpg'
 
 const Login = () => {
-
   return (
     <ScrollView>
       <View style={styles.page}>

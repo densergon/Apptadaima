@@ -4,13 +4,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from "@react-navigation/native";
 
 //Vistas
-
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen"
 import TeachersScreen from "./src/screens/TeachersScreen"
 import MyCoursesScreen from "./src/screens/MyCoursesScreen"
 import ManageCoursesScreen from "./src/screens/ManageCoursesScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen"
+import FacebookPage from "./src/screens/News";
 
 //Icons
 import { AntDesign } from '@expo/vector-icons';
@@ -75,6 +75,12 @@ function MyTabs() {
                 headerShown: false,
                 tabBarIcon: () => (<AntDesign name="home" size={24} color="black" />)
             }} />
+
+            <Tab.Screen name="Noticias" component={FacebookPage} options={{
+                headerShown: false,
+                tabBarIcon: () => (<AntDesign name="facebook-square" size={24} color="black" />)
+            }} />
+
             <Tab.Screen name="Perfil" component={MyDrawer} options={{
                 headerShown: false,
                 tabBarIcon: () => (<AntDesign name="user" size={24} color="black" />)
@@ -90,3 +96,4 @@ export default function Navigation() {
         </NavigationContainer>
     )
 }
+

@@ -3,21 +3,14 @@ import { View, Text, Pressable, ActivityIndicator } from 'react-native';
 import { styles } from '../../styles/Account.styles';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import { useAuthStore } from '../auth/authStore';
+import { useAuthStore } from '../../store/authStore';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import ModalBoleta from './ModalBoleta';
 
-/*
-interface User {
-    nombre: string,
-    boleta: string | null,
-    email: string
-}
-*/
 
 const Account = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState < User | null > (null);
     const userId = useAuthStore().user?.id_usuario;
     const [visible, setVisible] = useState(false);
 

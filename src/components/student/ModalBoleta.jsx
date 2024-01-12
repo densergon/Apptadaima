@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-import { useAuthStore } from '../auth/authStore';
-
-/*
-interface ModalProps {
-    visible: boolean,
-    onHide: () => void,
-    getData: () => void
-}
-*/
+import { useAuthStore } from '../../store/authStore';
 
 const ModalBoleta = ({ visible, onHide, getData }) => {
 

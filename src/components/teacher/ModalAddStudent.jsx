@@ -2,16 +2,8 @@ import { View, Text, TextInput, Pressable, Modal, StyleSheet, Alert } from 'reac
 import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-import { useLocalSearchParams } from 'expo-router';
-
-interface ModalProps {
-    visible: boolean,
-    onHide: () => void,
-    getStudents: () => void
-}
-
-const ModalAddStudent = ({ visible, onHide, getStudents }: ModalProps) => {
-    const { id } = useLocalSearchParams()
+const ModalAddStudent = ({ visible, onHide, getStudents }) => {
+    const { id } = 5
     const [boleta, setBoleta] = useState('')
     const handleSubmit = async () => {
         console.log(boleta)

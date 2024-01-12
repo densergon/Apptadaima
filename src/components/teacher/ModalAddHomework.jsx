@@ -2,29 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, View, Pressable, TextInput, Platform } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-import { useAuthStore } from '../auth/authStore';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { Picker } from '@react-native-picker/picker';
-import { useLocalSearchParams } from 'expo-router';
+import { useAuthStore } from '../../store/authStore.js';
 
-interface ModalProps {
-  visible: boolean,
-  onHide: () => void,
-  getData: () => void
-}
-const ModalAddHomework = ({ visible, onHide, getData }: ModalProps) => {
+const ModalAddHomework = ({ visible, onHide, getData, route }) => {
 
-  const { id } = useLocalSearchParams();
+  const { id } = route.params;
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState('')
   const [prioridad, setPrioridad] = useState(0);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('')
-
-  const toggleDatePicker = () => {
-    setShowPicker(!showPicker)
-  }
 
   const Homework = {
     nombre,
@@ -34,9 +22,9 @@ const ModalAddHomework = ({ visible, onHide, getData }: ModalProps) => {
     prioridad
   }
 
-  const format = (dateObject: Date) => {
+  const format = (dateObject) => {
     const year = dateObject.getFullYear();
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // getMonth() devuelve un valor de 0 a 11
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
     const day = dateObject.getDate().toString().padStart(2, '0');
 
     const hours = dateObject.getHours().toString().padStart(2, '0');
@@ -44,7 +32,7 @@ const ModalAddHomework = ({ visible, onHide, getData }: ModalProps) => {
     const seconds = dateObject.getSeconds().toString().padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
-  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+  const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === 'ios');
     setDate(currentDate);
@@ -86,28 +74,6 @@ const ModalAddHomework = ({ visible, onHide, getData }: ModalProps) => {
                 editable={false}
               />
             </Pressable>
-            {
-              showPicker && (
-                <DateTimePicker
-                  mode='date'
-                  display='spinner'
-                  value={date} // Usa el estado 'date' aquí
-                  onChange={onChange} // No es necesario pasar 'date' aquí
-                />
-              )
-            }
-            <View style={{ padding: 10 }}>
-              <Text style={styles.label}>Prioridad</Text>
-              <Picker
-                selectedValue={prioridad}
-                onValueChange={(itemValue, itemIndex) =>
-                  setPrioridad(itemValue)
-                }>
-                <Picker.Item label="Normal" value={0} />
-                <Picker.Item label="Urgente" value={1} />
-                <Picker.Item label="Opcional" value={2} />
-              </Picker>
-            </View>
             <Pressable style={styles.addBtn} onPress={HandleSubmit}>
               <Text style={styles.addTxtBtn}>Guardar</Text>
             </Pressable>

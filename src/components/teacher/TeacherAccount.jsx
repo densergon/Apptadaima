@@ -5,12 +5,11 @@ import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import { useAuthStore } from '../auth/authStore';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
 const Account = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState < User | null > (null);
     const [isLoading, setIsLoading] = useState(true);
     const userId = useAuthStore().user?.id_usuario;
     const focused = useIsFocused()
@@ -36,13 +35,13 @@ const Account = () => {
     };
 
     const goBack = () => {
-        if (rol == 1) {
-            router.replace('/administrator/');
-        } else if (rol == 2) {
-            router.replace('/teacher/');
-        } else if (rol == 3) {
-            router.replace('/student/');
-        }
+        // if (rol == 1) {
+        //     router.replace('/administrator/');
+        // } else if (rol == 2) {
+        //     router.replace('/teacher/');
+        // } else if (rol == 3) {
+        //     router.replace('/student/');
+        // }
     };
 
     if (isLoading) {

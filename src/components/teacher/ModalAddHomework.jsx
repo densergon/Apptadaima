@@ -8,7 +8,6 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
 
   const { id } = route.params;
   const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState('')
   const [prioridad, setPrioridad] = useState(0);
   const [nombre, setNombre] = useState('');
@@ -32,12 +31,7 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
     const seconds = dateObject.getSeconds().toString().padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'ios');
-    setDate(currentDate);
-    setDeliveryDate(format(currentDate)); // Actualizar para ambos sistemas
-  };
+
 
   const HandleSubmit = async () => {
     try {

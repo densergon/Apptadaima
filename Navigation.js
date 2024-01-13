@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { useAuthStore } from "./src/store/authStore"
 
 //Vistas
@@ -22,9 +22,13 @@ import HomeworksScreen from "./src/screens/HomeworksScreen"
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-const userType = useAuthStore.getState().user?.tipo_usuario;//--------------------------------------------------------ROL
 
 function MyDrawer() {
+    const userType = useAuthStore.getState().user?.tipo_usuario;//--------------------------------------------------------ROL
+
+    const isFocused = useIsFocused();
+    console.log('userType en DrawerNavigator:', userType);
+    console.log('isFocused en DrawerNavigator:', isFocused);
     return (
         <Drawer.Navigator initialRouteName="Mi perfil">
             <Drawer.Screen name="Mi perfil" component={ProfileScreen} options={{

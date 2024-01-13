@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet, Text, View, Pressable, TextInput, Platform } from 'react-native';
+import { Modal, StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore.js';
+import { useAuthStore } from '../../store/authStore';
 
 const ModalAddHomework = ({ visible, onHide, getData, route }) => {
 
@@ -60,14 +60,11 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
             </View>
             <TextInput style={styles.txtIpt} placeholder='Nombre de la Tarea' onChangeText={setNombre} />
             <TextInput style={styles.txtIpt} placeholder='Descripcion de la Tarea' onChangeText={setDescripcion} />
-            <Pressable onPress={toggleDatePicker} style={styles.delivery}>
-              <Text style={styles.label}>Fecha de Entrega:</Text>
-              <TextInput
-                style={styles.txtIpt}
-                value={deliveryDate}
-                editable={false}
-              />
-            </Pressable>
+            <Text style={styles.label}>Fecha de Entrega:</Text>
+            <TextInput
+              style={styles.txtIpt}
+              value={deliveryDate}
+            />
             <Pressable style={styles.addBtn} onPress={HandleSubmit}>
               <Text style={styles.addTxtBtn}>Guardar</Text>
             </Pressable>

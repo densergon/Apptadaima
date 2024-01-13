@@ -2,6 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from "@react-navigation/native";
+import { useAuthStore } from "./src/store/authStore"
 
 //Vistas
 import HomeScreen from "./src/screens/HomeScreen";
@@ -17,10 +18,11 @@ import { AntDesign } from '@expo/vector-icons';
 import CourseScreen from "./src/screens/CourseScreen";
 import MaterialListScreen from "./src/screens/MaterialListScreen";
 import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
+import HomeworksScreen from "./src/screens/HomeworksScreen"
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-const userType = 2;
+const userType = useAuthStore.getState().user?.tipo_usuario;//--------------------------------------------------------ROL
 
 function MyDrawer() {
     return (
@@ -53,6 +55,13 @@ function MyDrawer() {
                 title: ''
             }} />
             <Drawer.Screen name="Welcome" component={WelcomeScreen} options={{
+                drawerLabel: '',
+                drawerLabelStyle: {
+                    height: 0
+                },
+                title: ''
+            }} />
+            <Drawer.Screen name="ListarTareas" component={HomeworksScreen} options={{
                 drawerLabel: '',
                 drawerLabelStyle: {
                     height: 0

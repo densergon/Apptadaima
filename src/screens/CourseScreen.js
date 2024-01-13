@@ -37,7 +37,9 @@ const CourseScreen = ({ route }) => {
                     <Text style={styles.btnTxt}>Materiales</Text>
                     <SimpleLineIcons name="docs" size={24} color="white" />
                 </Pressable>
-                <Pressable style={styles.btn}>
+                <Pressable style={styles.btn} onPress={() => navigation.navigate('ListarTareas', {
+                    id: curso.idCurso
+                })}>
                     <Text style={styles.btnTxt}>Tareas</Text>
                     <FontAwesome5 name="tasks" size={24} color="white" />
                 </Pressable>

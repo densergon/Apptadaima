@@ -16,9 +16,13 @@ import FacebookPage from "./src/screens/News";
 //Icons
 import { AntDesign } from '@expo/vector-icons';
 import CourseScreen from "./src/screens/CourseScreen";
+import CourseScreenStudent from "./src/screens/CourseScreenStudent";
 import MaterialListScreen from "./src/screens/MaterialListScreen";
 import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
 import HomeworksScreen from "./src/screens/HomeworksScreen"
+import MaterialListScreenStudent from "./src/screens/MaterialListScreenStudent";
+
+
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,7 +48,20 @@ function MyDrawer() {
                     height: 0
                 }
             }} />
+            <Drawer.Screen name="CursoStudent" component={CourseScreenStudent} initialParams={{ id: 1 }} options={{
+                drawerLabel: '',
+                drawerLabelStyle: {
+                    height: 0
+                }
+            }} />
             <Drawer.Screen name="ListaMateriales" component={MaterialListScreen} initialParams={{ id: 1 }} options={{
+                drawerLabel: '',
+                drawerLabelStyle: {
+                    height: 0
+                },
+                title: 'Lista de Materiales'
+            }} />
+            <Drawer.Screen name="ListaMaterialesStudent" component={MaterialListScreenStudent} initialParams={{ id: 1 }} options={{
                 drawerLabel: '',
                 drawerLabelStyle: {
                     height: 0

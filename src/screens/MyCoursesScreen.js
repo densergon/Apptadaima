@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
+import { Link, useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useAuthStore } from "../store/authStore";
-import { Link, useIsFocused } from "@react-navigation/native";
 
 const MyCoursesScreen = () => {
   const [cursos, setCursos] = useState([]);
-  //const idUsuario = useAuthStore.getState().user?.id_usuario;
-  const idUsuario = 5;
-
+  const idUsuario = useAuthStore.getState().user?.id_usuario;
+  const userType = useAuthStore.getState().user?.tipo_usuario;
   const focused = useIsFocused();
+  const navigation = useNavigation();
+
+  console.log("userType: " + userType);
 
   const fetchCursos = async () => {
     try {
-      const response = await axios.get(
-        `http://192.168.100.165:3000/api/cursos/${idUsuario}`
-      );
-      console.log(response);
-      setCursos(response.data);
+      if (userType === 3) {
+        const response = await axios.get(
+          `http://192.168.100.165:3000/api/cursos/${idUsuario}`
+        );
+        //console.log(response);;
+        setCursos(response.data);
+      }
     } catch (error) {
       console.error("Error al obtener cursos:", error);
     }
@@ -28,20 +32,26 @@ const MyCoursesScreen = () => {
   }, [focused]);
 
   return (
-    <ScrollView style={styles.container}>
-      {cursos.map((curso, index) => (
-        <Link
-          to={{ screen: "Mis cursos", params: { id: curso.idCurso } }}
-          key={curso.idCurso}
-          style={styles.courseitem}
-        >
-          <Text style={styles.courseTitle}>{curso.curso}</Text>
-          <Text style={styles.courseTeacher}>
-            {curso.nombre} {curso.apellidoPaterno} {curso.apellidoPaterno}
-          </Text>
-        </Link>
-      ))}
+    //<ImageBackground source={require('../../assets/img/Grupos.jpg')} style={styles.backgroundImage}>
+    <ScrollView style={[styles.container, styles.containerWithUnderline]}>
+      <View style={styles.containerWithUnderline}>
+        {cursos.map((curso, index) => (
+          <Pressable
+            key={index}
+            onPress={() => {
+              navigation.navigate("CursoStudent", { id: curso.idCurso });
+            }}
+            style={styles.courseitem}
+          >
+            <Text style={styles.courseTitle}>{curso.curso}</Text>
+            <Text style={styles.courseTeacher}>
+              {curso.nombre} {curso.apellidoPaterno} {curso.apellidoPaterno}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
     </ScrollView>
+    //</ImageBackground>
   );
 };
 

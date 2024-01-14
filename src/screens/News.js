@@ -1,12 +1,12 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { WebView } from 'react-native-webview';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { WebView } from "react-native-webview";
 
 const FacebookPage = () => {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ uri: 'https://www.facebook.com/escomipnmx' }}
+        source={{ uri: "https://www.facebook.com/escomipnmx" }}
         style={styles.webview}
       />
     </View>

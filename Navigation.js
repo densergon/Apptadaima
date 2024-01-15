@@ -28,11 +28,9 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
-  const userType = useAuthStore.getState().user?.tipo_usuario; //--------------------------------------------------------ROL
+  const userType = useAuthStore.getState().user?.tipo_usuario;
 
   const isFocused = useIsFocused();
-  console.log("userType en DrawerNavigator:", userType);
-  console.log("isFocused en DrawerNavigator:", isFocused);
   return (
     <Drawer.Navigator initialRouteName="Mi perfil">
       <Drawer.Screen

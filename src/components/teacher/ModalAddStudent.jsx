@@ -8,7 +8,7 @@ const ModalAddStudent = ({ visible, onHide, getStudents }) => {
     const handleSubmit = async () => {
         console.log(boleta)
         try {
-            const response = await axios.post(`http://192.168.100.165:3000/api/students/curso/${id}`, {
+            const response = await axios.post(`http://192.168.3.9:3000/api/students/curso/${id}`, {
                 boleta,
                 idCurso: Number(id)
             });

@@ -21,7 +21,7 @@ const Page = () => {
     const fetchTareas = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.100.165:3000/api/homeworks/current/${id}`
+          `http://192.168.3.9:3000/api/homeworks/current/${id}`
         );
         const tareasOrdenadas = response.data.sort((a, b) => {
           const dateA = new Date(a.dateDelivery);
@@ -43,7 +43,7 @@ const Page = () => {
       headerLeft: () => (
         <Pressable
           style={{ marginLeft: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('Welcome')}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>

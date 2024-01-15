@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   const onSubmit = async () => {
     try {
-      const { data } = await axios.post("http://192.168.100.165:3000/api/auth/custom", { email, password });
+      const { data } = await axios.post("http://192.168.3.9:3000/api/auth/custom", { email, password });
       // Si la autenticación es exitosa y recibimos un token del backend
       if (data.token) {
         // Actualizar el estado global usando Zustand

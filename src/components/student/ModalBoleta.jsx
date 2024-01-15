@@ -11,7 +11,7 @@ const ModalBoleta = ({ visible, onHide, getData }) => {
 
     const handleSubmit = async () => {
         console.log(boleta)
-        const result = await axios.patch(`http://192.168.100.165:3000/api/students/${id}`, {
+        const result = await axios.patch(`http://192.168.3.9:3000/api/students/${id}`, {
             boleta: Number(boleta),
             id: Number(id)
         })

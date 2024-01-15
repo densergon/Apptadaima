@@ -18,7 +18,7 @@ const ModalUpdateClass = ({ visible, onHide, getClasses, id }) => {
 
         try {
             console.log(classData)
-            const response = await axios.put('http://192.168.100.165:3000/api/classes', classData);
+            const response = await axios.put('http://192.168.3.9:3000/api/classes', classData);
             if (response.data.message === 'Modificado exitosamente') {
                 Alert.alert('Exito', 'Actualizado exitosamente');
                 onHide();

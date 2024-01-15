@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/authStore';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const WelcomeScreen = () => {
     const userType = useAuthStore.getState().user?.tipo_usuario;
@@ -9,6 +10,13 @@ const WelcomeScreen = () => {
     const [btn, setBtn] = useState(<></>);
     const navigation = useNavigation();
     const log = useAuthStore.getState().logout;
+    const userId = useAuthStore().user?.id_usuario;
+    const [user, setUser] = useState({
+        nombre: '',
+        apellidoPaterno: '',
+        apellidoMaterno: '',
+        email: ''
+    });
     const cerrarSesion = () => {
         log()
         navigation.navigate('Perfil')
@@ -23,6 +31,15 @@ const WelcomeScreen = () => {
             navigation.navigate('Perfil')
         }
     }, [auth])
+
+    const getData = async () => {
+        try {
+            const response = await axios.get(`http://192.168.3.9:3000/api/auth/user/${userId}`)
+            setUser(response.data);
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+        }
+    }
 
     let greeting = '';
     switch (userType) {
@@ -39,11 +56,32 @@ const WelcomeScreen = () => {
             greeting = 'Bienvenido';
             break;
     }
+    const focused = useIsFocused()
+    useEffect(() => {
+        getData()
+    }, [focused]);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.txt}>{greeting}</Text>
-            {btn}
+        <View style={styles.container} >
+            <View style={styles.header}>
+                <Text style={styles.h1}>Mis datos</Text>
+            </View>
+            <View style={styles.dataContainer}>
+                <View style={styles.dataContainer}>
+                    <View style={styles.box}>
+                        <Text style={styles.p}>Nombre:</Text>
+                        {user ? <Text style={styles.p}>{user?.nombre} {user?.apellidoPaterno} {user?.apellidoMaterno}</Text> : <Text></Text>}
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.p}>Email:</Text>
+                        <Text style={styles.p}>{user?.email}</Text>
+                    </View>
+                </View>
+
+            </View>
+            <View>
+                {btn}
+            </View>
         </View>
     )
 }
@@ -52,11 +90,41 @@ export default WelcomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        height: '100%'
+        marginTop: 10
     },
-    txt: {
+    h1: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: '500',
+        margin: 20
+    },
+    header: {
+        width: '100%',
+        flexDirection: 'row'
+    },
+    icon: {
+        margin: 20
+    },
+    box: {
+        flexDirection: 'row',
+        alignItems: 'stretch'
+    },
+    dataContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20
+    },
+    p: {
         fontSize: 18
+    },
+    red: {
+        color: '#e74c3c',
+        fontWeight: '500'
     }
 })

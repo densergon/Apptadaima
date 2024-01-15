@@ -5,6 +5,9 @@ import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAuthStore } from "../store/authStore";
 import { AntDesign } from "@expo/vector-icons";
+import * as DocumentPicker from 'expo-document-picker';
+import { fileDb } from '../config'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const Page = ({ route }) => {
   const focused = useIsFocused();
@@ -13,7 +16,49 @@ const Page = ({ route }) => {
   const idUsuario = useAuthStore().user?.id_usuario;
   const [tarea, setTarea] = useState([]);
   const [descripcion, setDescripcion] = useState('');
-  const [prioridad, setPrioridad] = useState(0)
+  const [prioridad, setPrioridad] = useState(0);
+
+
+  const pickDocument = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: 'application/pdf',
+      copyToCacheDirectory: true,
+    });
+    if (result.type === 'cancel') {
+      console.log('Se canceló la selección del documento');
+    } else {
+      const uri = result.assets[0].uri;
+      const filename = result.assets[0].name;
+      const fileurl = await uploadToFirebaseStorage(uri, filename);
+      const tareaEntregada = {
+        idUsuario,
+        idTarea: id,
+        uri: fileurl,
+        descripcion
+      };
+      try {
+        console.log(tareaEntregada)
+        const response = await axios.post(
+          `http://192.168.3.9:3000/api/delivered/`,
+          tareaEntregada
+        );
+        console.log(response.data);
+        navigation.navigate('CourseHomeworks', { id: curso })
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+  };
+
+  const uploadToFirebaseStorage = async (uri, fileName) => {
+    const fileRef = ref(fileDb, fileName);
+    const res = await fetch(uri);
+    const fileBlob = await res.blob()
+    const snapshot = await uploadBytes(fileRef, fileBlob);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    return downloadURL;
+  };
 
   const getTarea = async () => {
     try {
@@ -44,24 +89,6 @@ const Page = ({ route }) => {
     });
   }, [navigation]);
 
-  const entregar = async () => {
-    const tareaEntregada = {
-      idUsuario,
-      idTarea: id,
-      uri: "",
-      descripcion
-    };
-    try {
-      const response = await axios.post(
-        `http://192.168.3.9:3000/api/delivered/`,
-        tareaEntregada
-      );
-      console.log(response.data);
-      navigation.navigate('CourseHomeworks', { id: curso })
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <View>
@@ -78,7 +105,7 @@ const Page = ({ route }) => {
             <TextInput value={descripcion} onChangeText={setDescripcion} />
           </View>
           <View>
-            <Pressable style={style.btn} onPress={entregar}>
+            <Pressable style={style.btn} onPress={pickDocument}>
               <Text style={style.btnTxt}>Entregar tarea</Text>
             </Pressable>
             <Text>El archivo no puede superar los 2Mb.</Text>

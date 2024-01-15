@@ -9,6 +9,7 @@ import ModalAddHomework from "../components/teacher/ModalAddHomework";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { parseISO } from 'date-fns';
 
 const HomeworksScreen = ({ route }) => {
   const [tareas, setTareas] = useState([]);
@@ -19,27 +20,14 @@ const HomeworksScreen = ({ route }) => {
   const focus = useIsFocused();
   const prioridad = ["Urgente", "No tan urgente", "Regular"]
 
+
   const fetchTareas = async () => {
     try {
       const response = await axios.get(
         `http://192.168.3.9:3000/api/homeworks/clase/${id}`
       );
       console.log(response.data)
-      const tareasOrdenadas = response.data.sort((a, b) => {
-        const dateA = new Date(a.dateDelivery);
-        const dateB = new Date(b.dateDelivery);
-
-        if (dateA < dateB) {
-          return -1;
-        }
-        if (dateA > dateB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      console.log(tareasOrdenadas)
-      setTareas(tareasOrdenadas);
+      setTareas(response.data.reverse());
     } catch (error) {
       console.error("Error al obtener las tareas:", error);
     }
@@ -55,7 +43,7 @@ const HomeworksScreen = ({ route }) => {
       headerLeft: () => (
         <Pressable
           style={{ marginLeft: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('Welcome')}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>

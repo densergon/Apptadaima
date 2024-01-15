@@ -26,6 +26,7 @@ import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
 import HomeworksScreen from "./src/screens/HomeworksScreen";
 import MaterialListScreenStudent from "./src/screens/MaterialListScreenStudent";
 import HomeworkScreen from "./src/screens/HomeworkScreen";
+import DeliveredHomework from "./src/screens/DeliveredHomework"
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -133,6 +134,17 @@ function MyDrawer() {
             height: 0,
           },
           title: "",
+        }}
+      />
+      <Drawer.Screen
+        name="TareaEntregada"
+        component={DeliveredHomework}
+        options={{
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
+          title: "Detalles",
         }}
       />
       <Drawer.Screen

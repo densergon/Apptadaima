@@ -6,13 +6,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useAuthStore } from "../store/authStore";
 
-
-const Page = ({ route }) => {
+const CourseHomeworks = ({ route }) => {
     const focused = useIsFocused();
     const navigation = useNavigation();
     const { id } = route.params;
     const prioridad = ["Urgente", "Normal", "No urgente", "Opcional"];
     const [tareas, setTareas] = useState([]);
+
 
     useEffect(() => {
         navigation.setOptions({
@@ -59,7 +59,7 @@ const Page = ({ route }) => {
     );
 };
 
-export default Page;
+export default CourseHomeworks;
 
 const style = StyleSheet.create({
     item: {

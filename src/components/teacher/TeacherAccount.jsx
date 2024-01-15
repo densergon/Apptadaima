@@ -15,7 +15,7 @@ const Account = () => {
     const focused = useIsFocused()
     const getData = async () => {
         try {
-            const response = await axios.get(`http://192.168.100.165:3000/api/teachers/${userId}`)
+            const response = await axios.get(`http://192.168.56.1:3000/api/teachers/${userId}`)
             setUser(response.data);
             setIsLoading(false);
         } catch (error) {

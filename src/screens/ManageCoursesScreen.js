@@ -29,7 +29,7 @@ const ManageCoursesScreen = () => {
   };
 
   const deleteClass = async (id) => {
-    await axios.delete(`http://192.168.100.165:3000/api/classes/${id}`);
+    await axios.delete(`http://192.168.56.1:3000/api/classes/${id}`);
     fetchClases();
   };
   const updateClass = (id) => {

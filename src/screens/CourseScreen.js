@@ -16,7 +16,7 @@ const CourseScreen = ({ route }) => {
   const getClass = async () => {
     try {
       const result = await axios.get(
-        `http://192.168.100.165:3000/api/classes/one/${id}`
+        `http://192.168.56.1:3000/api/classes/one/${id}`
       );
       setCurso(result.data);
     } catch (error) {

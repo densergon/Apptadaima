@@ -21,7 +21,7 @@ const Page = () => {
     const fetchTareas = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.100.165:3000/api/homeworks/current/${id}`
+          `http://192.168.56.1:3000/api/homeworks/current/${id}`
         );
         const tareasOrdenadas = response.data.sort((a, b) => {
           const dateA = new Date(a.dateDelivery);

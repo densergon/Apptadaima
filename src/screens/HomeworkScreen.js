@@ -20,13 +20,13 @@ const HomeworkScreen = ({ route }) => {
   });
   const getHomework = async () => {
     const response = await axios.get(
-      `http://192.168.100.165:3000/api/homeworks/tarea/${id}`
+      `http://192.168.56.1:3000/api/homeworks/tarea/${id}`
     );
     setHomework(response.data);
   };
   const deleteHomework = async () => {
     const response = await axios.delete(
-      `http://192.168.100.165:3000/api/homeworks/${id}`
+      `http://192.168.56.1:3000/api/homeworks/${id}`
     );
     if (response.data.message == "Eliminada exitosamente") {
       //router.push('/teacher/manageClasses')

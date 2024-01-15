@@ -16,7 +16,7 @@ const Page = ({ route }) => {
   const getTarea = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.100.165:3000/api/homeworks/tarea/${id}`
+        `http://192.168.56.1:3000/api/homeworks/tarea/${id}`
       );
       setTarea(response.data);
     } catch (error) {
@@ -50,7 +50,7 @@ const Page = ({ route }) => {
     };
     try {
       const response = await axios.post(
-        `http://192.168.100.165:3000/api/delivered/`,
+        `http://192.168.56.1:3000/api/delivered/`,
         tareaEntregada
       );
       console.log(response.data);

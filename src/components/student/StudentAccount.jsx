@@ -15,7 +15,7 @@ const Account = () => {
     const [visible, setVisible] = useState(false);
 
     const getData = async () => {
-        await fetch(`http://192.168.100.165:3000/api/students/${userId}`)
+        await fetch(`http://192.168.56.1:3000/api/students/${userId}`)
             .then(response => response.json())
             .then(data => {
                 setUser(data);

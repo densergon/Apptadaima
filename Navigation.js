@@ -14,6 +14,7 @@ import HomeworkDescriptionScreen from "./src/screens/HomeworkDescriptionScreen";
 import ManageCoursesScreen from "./src/screens/ManageCoursesScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import FacebookPage from "./src/screens/News";
+import CourseHomeworks from "./src/screens/CourseHomeworks";
 
 //Icons
 import { AntDesign } from "@expo/vector-icons";
@@ -72,6 +73,17 @@ function MyDrawer() {
       <Drawer.Screen
         name="CursoStudent"
         component={CourseScreenStudent}
+        initialParams={{ id: 1 }}
+        options={{
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="CourseHomeworks"
+        component={CourseHomeworks}
         initialParams={{ id: 1 }}
         options={{
           drawerLabel: "",

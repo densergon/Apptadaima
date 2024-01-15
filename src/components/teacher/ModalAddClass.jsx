@@ -19,7 +19,7 @@ const ModalAddClass = ({ visible, onHide, getClasses }) => {
 
         try {
             console.log(classData)
-            const response = await axios.post('http://192.168.100.165:3000/api/classes', classData);
+            const response = await axios.post('http://192.168.56.1:3000/api/classes', classData);
             if (response.data.message === 'Creado exitosamente') {
                 Alert.alert('Exito', 'Clase creada correctamente');
                 onHide(); // Cerrar el modal después de un registro exitoso

@@ -50,7 +50,7 @@ const ModalEditTeacher = ({ visible, onHide, getTeachers, id }) => {
         };
         //nombre, apellidoPaterno, apellidoMaterno, email, password
         try {
-            const response = await axios.put(`http://192.168.3.9:3000/api/teachers/${id}`, teacherData);
+            const response = await axios.put(`http://192.168.100.165:3000/api/teachers/${id}`, teacherData);
             if (response.data.message === 'Usuario actualizado') {
                 Alert.alert('Exito', 'Profesor actualizado correctamente');
                 getTeachers()

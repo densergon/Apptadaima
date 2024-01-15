@@ -50,7 +50,7 @@ const Page = ({ route }) => {
     };
     try {
       const response = await axios.post(
-        `http://192.168.3.9:3000/api/delivered/`,
+        `http://192.168.100.165:3000/api/delivered/`,
         tareaEntregada
       );
       console.log(response.data);

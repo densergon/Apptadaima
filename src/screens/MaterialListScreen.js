@@ -33,7 +33,7 @@ const MaterialListScreen = ({ route }) => {
   const deleteMaterial = async (idM) => {
     try {
       const response = await axios.delete(
-        `http://192.168.3.9:3000/api/materiales/${idM}`
+        `http://192.168.100.165:3000/api/materiales/${idM}`
       );
       if (response.status == 200) {
         getMateriales();

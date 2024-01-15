@@ -120,10 +120,7 @@ function MyDrawer() {
         name="Welcome"
         component={WelcomeScreen}
         options={{
-          drawerLabel: "",
-          drawerLabelStyle: {
-            height: 0,
-          },
+          drawerLabel: "Inicio",
           title: "",
         }}
       />

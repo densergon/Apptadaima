@@ -5,7 +5,8 @@ import { useIsFocused } from '@react-navigation/native'
 
 
 const Page = ({ route }) => {
-    const { id } = route.params;
+    //const { id } = route.params;
+    const id = 3;
     const focused = useIsFocused()
     const [entregadas, setEntregadas] = useState([])
 

@@ -17,17 +17,28 @@ const HomeworksScreen = ({ route }) => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
   const focus = useIsFocused();
+  const prioridad = ["Urgente", "No tan urgente", "Regular"]
 
   const fetchTareas = async () => {
     try {
       const response = await axios.get(
         `http://192.168.3.9:3000/api/homeworks/clase/${id}`
       );
+      console.log(response.data)
       const tareasOrdenadas = response.data.sort((a, b) => {
         const dateA = new Date(a.dateDelivery);
         const dateB = new Date(b.dateDelivery);
-        return dateA.getTime() - dateB.getTime();
+
+        if (dateA < dateB) {
+          return -1;
+        }
+        if (dateA > dateB) {
+          return 1;
+        }
+        return 0;
       });
+
+      console.log(tareasOrdenadas)
       setTareas(tareasOrdenadas);
     } catch (error) {
       console.error("Error al obtener las tareas:", error);
@@ -52,6 +63,26 @@ const HomeworksScreen = ({ route }) => {
     });
   }, [navigation]);
 
+  function calc(fechaString) {
+    // Convierte la cadena de fecha a un objeto Date
+    const fechaSeleccionada = new Date(fechaString);
+    // Obtiene la fecha actual
+    const fechaActual = new Date();
+    // Calcula la diferencia en milisegundos
+    const diferenciaEnMilisegundos = fechaSeleccionada - fechaActual;
+    // Calcula la diferencia en días
+    const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+    // Lógica de retorno basada en las condiciones proporcionadas
+    if (diferenciaEnDias === 0 || diferenciaEnDias === 1) {
+      return 'Urgente';
+    } else if (diferenciaEnDias >= 2 && diferenciaEnDias <= 3) {
+      return 'No tan urgente';
+    } else {
+      return 'Regular';
+    }
+  }
+
+
   return (
     <ScrollView>
       <View>
@@ -61,19 +92,24 @@ const HomeworksScreen = ({ route }) => {
         </Pressable>
         <View style={styles.container}>
           {tareas.map((tarea) => (
-            <View key={tarea.idTareas} style={styles.homework}>
-              <Link
-                to={{
-                  screen: "Tarea",
-                  params: { id: tarea.idTareas, curso: id },
-                }}
-                key={tarea.idTareas}
-                style={styles.homework}
-              >
-                <Text style={styles.homeworkTitle}>{tarea.nombre}-</Text>
+            <Pressable key={tarea.idTareas} style={styles.homework} onPress={() => navigation.navigate('Tarea', {
+              id: tarea.idTareas,
+              curso: id
+            })}>
+              <View>
+                <Text style={styles.homeworkTitle}>{tarea.nombre}</Text>
                 <Text style={styles.homeworkTitle}>{tarea.descripcion}</Text>
-              </Link>
-            </View>
+              </View>
+              <Text style={[
+                calc(tarea.dateDelivery) === 'Urgente'
+                  ? styles.priorityUrgent
+                  : calc(tarea.dateDelivery) === 'No tan urgente'
+                    ? styles.priorityNotUrgent
+                    : styles.priorityRegular,
+              ]}
+              >
+                {calc(tarea.dateDelivery)}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
@@ -108,13 +144,22 @@ const styles = StyleSheet.create({
   },
   homework: {
     backgroundColor: "white",
-    flexDirection: "column",
+    flexDirection: "row",
     padding: 15,
-    justifyContent: "center",
-    alignItems: "space-evenly",
+    justifyContent: "space-between",
+    alignItems: "center",
     gap: 20
   },
   homeworkTitle: {
     fontSize: 20,
+  },
+  priorityUrgent: {
+    color: 'red',
+  },
+  priorityNotUrgent: {
+    color: 'yellow',
+  },
+  priorityRegular: {
+    color: 'gray',
   },
 });

@@ -1,5 +1,5 @@
 //Descripcion Individual de la Tarea
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -12,6 +12,8 @@ const Page = ({ route }) => {
   const { id, curso } = route.params;
   const idUsuario = useAuthStore().user?.id_usuario;
   const [tarea, setTarea] = useState([]);
+  const [descripcion, setDescripcion] = useState('');
+  const [prioridad, setPrioridad] = useState(0)
 
   const getTarea = async () => {
     try {
@@ -47,14 +49,15 @@ const Page = ({ route }) => {
       idUsuario,
       idTarea: id,
       uri: "",
+      descripcion
     };
     try {
       const response = await axios.post(
-        `http://192.168.100.165:3000/api/delivered/`,
+        `http://192.168.3.9:3000/api/delivered/`,
         tareaEntregada
       );
       console.log(response.data);
-      navigation.replace("HomeworkStudentScreen");
+      navigation.navigate('CourseHomeworks', { id: curso })
     } catch (error) {
       console.log(error);
     }
@@ -71,11 +74,14 @@ const Page = ({ route }) => {
               Fecha de entrega:
               {new Date(tarea.dateDelivery).toLocaleDateString()}
             </Text>
+            <Text>Prioridad:{prioridad}</Text>
+            <TextInput value={descripcion} onChangeText={setDescripcion} />
           </View>
           <View>
             <Pressable style={style.btn} onPress={entregar}>
               <Text style={style.btnTxt}>Entregar tarea</Text>
             </Pressable>
+            <Text>El archivo no puede superar los 2Mb.</Text>
           </View>
         </>
       ) : (

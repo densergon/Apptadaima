@@ -3,7 +3,6 @@ import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 import { Link, useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
-import { styles } from "../styles/Homeworks.styles";
 import { AntDesign } from "@expo/vector-icons";
 import { useAuthStore } from "../store/authStore";
 
@@ -14,9 +13,16 @@ const Page = ({ route }) => {
     const { id } = route.params;
     const prioridad = ["Urgente", "Normal", "No urgente", "Opcional"];
     const [tareas, setTareas] = useState([]);
+
+    useEffect(() => {
+        navigation.setOptions({
+            title: 'Tareas del curso'
+        });
+    }, []);
+
     const getTareas = async () => {
         try {
-            const response = await axios.get(`http://192.168.1.72:3000/api/homeworks/clase/${Number(id)}`);
+            const response = await axios.get(`http://192.168.3.9:3000/api/homeworks/clase/${Number(id)}`);
             setTareas(response.data);
         } catch (error) {
             console.log(error);
@@ -31,7 +37,7 @@ const Page = ({ route }) => {
         <ScrollView>
             <View>
                 {tareas.map((tarea) => (
-                    <Pressable style={styles.delBtn}
+                    <Pressable style={style.item}
                         onPress={() =>
                             navigation.navigate("Descripción", {
                                 id: tarea.idTareas,
@@ -40,17 +46,12 @@ const Page = ({ route }) => {
                         }
                         key={tarea.idTareas}
                     >
-                        <View style={styles.materialItem}>
-                            <Text style={styles.materialName}>{tarea.nombre}</Text>
-                            <Text style={styles.materialName}>{tarea.descripcion}</Text>
-                            <Text style={styles.materialName}>
-                                {prioridad[Number(tarea.prioridad)]}
-                            </Text>
-                            <Text style={styles.materialName}>
-                                Fecha de entrega:
-                                {new Date(tarea.dateDelivery).toLocaleDateString()}
-                            </Text>
-                        </View>
+                        <Text style={style.itemTitle}>{tarea.nombre}</Text>
+                        <Text style={style.itemTxt}>{tarea.descripcion}</Text>
+                        <Text style={style.itemTxt}>
+                            Fecha de entrega:
+                            {new Date(tarea.dateDelivery).toLocaleDateString()}
+                        </Text>
                     </Pressable>
                 ))}
             </View>
@@ -62,43 +63,16 @@ export default Page;
 
 const style = StyleSheet.create({
     item: {
-        backgroundColor: 'white',
         padding: 15,
-    }, homeworkTitle: {
-        fontSize: 14,
-    }, h1: {
-        fontSize: 20,
-        margin: 10,
+        backgroundColor: 'white',
     },
-    btn: {
-        backgroundColor: "#3498db",
-        padding: 10,
-        width: "50%",
-        alignSelf: "flex-end",
-        borderRadius: 10,
-        flexDirection: "row",
-        gap: 10,
-        margin: 5,
-    },
-    btnText: {
-        color: "white",
+    itemTitle: {
         fontSize: 18,
-        textAlign: "center",
+        margin: 5,
+        fontWeight: '500'
     },
-    materialItem: {
-        backgroundColor: "white",
-        padding: 10,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    materialName: {
-        fontSize: 20,
-        paddingLeft: 20,
-    },
-    delBtn: {
-        backgroundColor: "red",
-        padding: 8,
-        borderRadius: 10,
-    },
+    itemTxt: {
+        fontSize: 15,
+        margin: 3
+    }
 });

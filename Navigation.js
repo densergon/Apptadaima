@@ -15,6 +15,7 @@ import ManageCoursesScreen from "./src/screens/ManageCoursesScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import FacebookPage from "./src/screens/News";
 import CourseHomeworks from "./src/screens/CourseHomeworks";
+import DeliveredHomeworks from "./src/screens/DeliveredHomeworks"
 
 //Icons
 import { AntDesign } from "@expo/vector-icons";
@@ -24,6 +25,7 @@ import MaterialListScreen from "./src/screens/MaterialListScreen";
 import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
 import HomeworksScreen from "./src/screens/HomeworksScreen";
 import MaterialListScreenStudent from "./src/screens/MaterialListScreenStudent";
+import HomeworkScreen from "./src/screens/HomeworkScreen";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,9 +35,9 @@ function MyDrawer() {
 
   const isFocused = useIsFocused();
   return (
-    <Drawer.Navigator initialRouteName="Mi perfil">
+    <Drawer.Navigator initialRouteName="Perfil">
       <Drawer.Screen
-        name="Mi perfil"
+        name="Perfil"
         component={ProfileScreen}
         options={{
           headerShown: false,
@@ -145,6 +147,28 @@ function MyDrawer() {
             height: 0,
           },
           title: "",
+        }}
+      />
+      <Drawer.Screen
+        name="Tarea"
+        component={HomeworkScreen}
+        options={{
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
+          title: "",
+        }}
+      />
+      <Drawer.Screen
+        name="Entregadas"
+        component={DeliveredHomeworks}
+        options={{
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
+          title: "Tareas entregadas",
         }}
       />
       {userType === 1 && (

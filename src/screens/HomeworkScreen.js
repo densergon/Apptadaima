@@ -28,11 +28,12 @@ const HomeworkScreen = ({ route }) => {
     const response = await axios.delete(
       `http://192.168.3.9:3000/api/homeworks/${id}`
     );
+    console.log(response.data)
     if (response.data.message == "Eliminada exitosamente") {
       //router.push('/teacher/manageClasses')
-      navigation.navigate("Tareas", {
+      navigation.navigate("ListarTareas", {
         id: curso,
-      });
+      })
     }
   };
   useEffect(() => {
@@ -49,10 +50,11 @@ const HomeworkScreen = ({ route }) => {
           Fecha de entrega:
           {new Date(homework.dateDelivery).toLocaleDateString()}
         </Text>
-        <Text>{prioridad[homework.prioridad]}</Text>
       </View>
       <View style={style.btnsContainer}>
-        <Pressable style={[style.btn, style.btn]}>
+        <Pressable style={[style.btn, style.btn]} onPress={() => navigation.navigate('Entregadas', {
+          id: curso
+        })}>
           <Text style={[style.btnTxt]}>Ver tareas entregadas</Text>
         </Pressable>
         <Pressable style={[style.btn, style.editBtn]}>

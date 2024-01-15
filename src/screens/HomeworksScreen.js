@@ -68,9 +68,9 @@ const HomeworksScreen = ({ route }) => {
                   params: { id: tarea.idTareas, curso: id },
                 }}
                 key={tarea.idTareas}
-                style={styles.courseitem}
+                style={styles.homework}
               >
-                <Text style={styles.homeworkTitle}>{tarea.nombre}</Text>
+                <Text style={styles.homeworkTitle}>{tarea.nombre}-</Text>
                 <Text style={styles.homeworkTitle}>{tarea.descripcion}</Text>
               </Link>
             </View>
@@ -108,10 +108,11 @@ const styles = StyleSheet.create({
   },
   homework: {
     backgroundColor: "white",
-    flexDirection: "row",
-    padding: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "space-evenly",
+    gap: 20
   },
   homeworkTitle: {
     fontSize: 20,

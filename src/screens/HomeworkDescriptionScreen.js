@@ -9,7 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 const Page = ({ route }) => {
   const focused = useIsFocused();
   const navigation = useNavigation();
-  const { id } = route.params;
+  const { id, curso } = route.params;
   const idUsuario = useAuthStore().user?.id_usuario;
   const [tarea, setTarea] = useState([]);
 
@@ -34,7 +34,7 @@ const Page = ({ route }) => {
       headerLeft: () => (
         <Pressable
           style={{ marginLeft: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('CourseHomeworks', { id: curso })}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>

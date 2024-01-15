@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
+import { Modal, StyleSheet, Text, View, Pressable, TextInput, Platform } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
 import { useAuthStore } from '../../store/authStore';
+// Importa el datepicker solo en web
+let DatePicker;
+if (Platform.OS === 'web') {
+  DatePicker = require('react-datepicker').default;
+  require('react-datepicker/dist/react-datepicker.css');
+}
 
 const ModalAddHomework = ({ visible, onHide, getData, route }) => {
 
@@ -16,21 +22,29 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
   const Homework = {
     nombre,
     descripcion,
-    dateDelivery: deliveryDate,
+    dateDelivery: convertirFormatoFecha(deliveryDate),
     curso: Number(id),
     prioridad
   }
 
-  const format = (dateObject) => {
-    const year = dateObject.getFullYear();
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateObject.getDate().toString().padStart(2, '0');
+  function convertirFormatoFecha(fechaOriginal) {
+    // Parsea la fecha original
+    const fechaParseada = new Date(fechaOriginal);
 
-    const hours = dateObject.getHours().toString().padStart(2, '0');
-    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-    const seconds = dateObject.getSeconds().toString().padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    // Obtiene los componentes de la fecha
+    const year = fechaParseada.getFullYear();
+    const month = String(fechaParseada.getMonth() + 1).padStart(2, '0');
+    const day = String(fechaParseada.getDate()).padStart(2, '0');
+    const hours = String(fechaParseada.getHours()).padStart(2, '0');
+    const minutes = String(fechaParseada.getMinutes()).padStart(2, '0');
+    const seconds = String(fechaParseada.getSeconds()).padStart(2, '0');
+
+    // Formatea la fecha en el nuevo formato
+    const fechaFormateada = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    return fechaFormateada;
   }
+
 
 
   const HandleSubmit = async () => {
@@ -61,10 +75,26 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
             <TextInput style={styles.txtIpt} placeholder='Nombre de la Tarea' onChangeText={setNombre} />
             <TextInput style={styles.txtIpt} placeholder='Descripcion de la Tarea' onChangeText={setDescripcion} />
             <Text style={styles.label}>Fecha de Entrega:</Text>
-            <TextInput
-              style={styles.txtIpt}
-              value={deliveryDate}
-            />
+
+            {Platform.OS === 'web' ? (
+              <DatePicker
+                selected={deliveryDate}
+                onChange={setDeliveryDate}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+
+                dateFormat="yyyy MMMM d,h:mm aa"
+              />
+            ) : (
+              <TextInput
+                style={styles.txtIpt}
+                placeholder="Selecciona una fecha"
+                value={deliveryDate}
+                onChangeText={setDeliveryDate}
+                type={Platform.OS === 'web' ? 'datetime-local' : undefined}
+              />
+            )}
             <Pressable style={styles.addBtn} onPress={HandleSubmit}>
               <Text style={styles.addTxtBtn}>Guardar</Text>
             </Pressable>

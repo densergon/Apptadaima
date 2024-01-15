@@ -5,16 +5,7 @@ import { Link } from '@react-navigation/native'
 const HomeScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text>HomeScreen</Text>
-            <Link to={{ screen: 'Profesores' }}>
-                Profesores
-            </Link>
-            <Link to={{ screen: 'Cursos' }}>
-                Cursos
-            </Link>
-            <Link to={{ screen: 'Profesores' }}>
-                Profesores
-            </Link>
+            <Text>Tadaima</Text>
         </SafeAreaView>
     )
 }
@@ -23,7 +14,8 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '10%',
-        gap: 15
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
     }
 })

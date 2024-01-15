@@ -11,9 +11,17 @@ const CourseScreenStudent = ({ route }) => {
     const navigation = useNavigation()
     const [curso, setCurso] = useState({ curso: '', idCurso: 0 });
 
+    useEffect(() => {
+        navigation.setOptions({
+            title: curso.curso
+        });
+    }, [curso]);
+
+
     const getClass = async () => {
         try {
-            const result = await axios.get(`http://192.168.1.72:3000/api/classes/one/${id}`);
+            const result = await axios.get(`http://192.168.3.9:3000/api/classes/one/${id}`);
+            console.log(result.data)
             setCurso(result.data);
         } catch (error) {
             console.log(error);
@@ -41,7 +49,6 @@ const CourseScreenStudent = ({ route }) => {
                     <Text style={styles.btnTxt}>Tareas</Text>
                     <SimpleLineIcons name="docs" size={24} color="white" />
                 </Pressable>
-
             </View>
         </ScrollView>
         //</ImageBackground>

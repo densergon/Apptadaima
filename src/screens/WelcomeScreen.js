@@ -1,10 +1,28 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/authStore';
+import { useNavigation } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
     const userType = useAuthStore.getState().user?.tipo_usuario;
-    //console.log(useAuthStore.getState().user);
+    const auth = useAuthStore.getState().isAuthenticated;
+    const [btn, setBtn] = useState(<></>);
+    const navigation = useNavigation();
+    const log = useAuthStore.getState().logout;
+    const cerrarSesion = () => {
+        log()
+        navigation.navigate('Perfil')
+    }
+    useEffect(() => {
+        if (auth) {
+            setBtn(<>
+                <Pressable onPress={cerrarSesion}>
+                    <Text>Cerrar Sesión</Text>
+                </Pressable></>)
+        } else {
+            navigation.navigate('Perfil')
+        }
+    }, [auth])
 
     let greeting = '';
     switch (userType) {
@@ -25,6 +43,7 @@ const WelcomeScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.txt}>{greeting}</Text>
+            {btn}
         </View>
     )
 }

@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 
 const ModalAddHomework = ({ visible, onHide, getData, route }) => {
-
   const { id } = route.params;
-  const [date, setDate] = useState(new Date());
-  const [deliveryDate, setDeliveryDate] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [prioridad, setPrioridad] = useState(0);
   const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('')
-
-  const Homework = {
-    nombre,
-    descripcion,
-    dateDelivery: deliveryDate,
-    curso: Number(id),
-    prioridad
-  }
-
+  const [descripcion, setDescripcion] = useState('');
   const format = (dateObject) => {
     const year = dateObject.getFullYear();
     const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
@@ -32,16 +22,26 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
+  const Homework = {
+    nombre,
+    descripcion,
+    dateDelivery: format(deliveryDate),
+    curso: Number(id),
+    prioridad
+  };
+
 
   const HandleSubmit = async () => {
+    console.log(Homework)
     try {
-      await axios.post('http://192.168.56.1:3000/api/homeworks', Homework);
+      await axios.post('http://192.168.3.9:3000/api/homeworks', Homework);
       getData()
       onHide()
     } catch (error) {
       console.log(error)
     }
   }
+
 
   return (
     <Modal
@@ -61,9 +61,14 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
             <TextInput style={styles.txtIpt} placeholder='Nombre de la Tarea' onChangeText={setNombre} />
             <TextInput style={styles.txtIpt} placeholder='Descripcion de la Tarea' onChangeText={setDescripcion} />
             <Text style={styles.label}>Fecha de Entrega:</Text>
-            <TextInput
-              style={styles.txtIpt}
-              value={deliveryDate}
+            <DatePicker
+              selected={deliveryDate}
+              onChange={(date) => setDeliveryDate(date)}
+              dateFormat="yyyy-MM-dd HH:mm:ss"
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15} // Intervalo de minutos para la selección de hora
+              timeCaption="Hora"
             />
             <Pressable style={styles.addBtn} onPress={HandleSubmit}>
               <Text style={styles.addTxtBtn}>Guardar</Text>
@@ -74,6 +79,7 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
     </Modal>
   );
 };
+
 
 
 const styles = StyleSheet.create({

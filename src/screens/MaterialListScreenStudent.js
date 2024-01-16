@@ -9,7 +9,7 @@ const MaterialListScreenStudent = ({ route }) => {
     const [materiales, setMateriales] = useState([])
     const getMateriales = async () => {
         try {
-            const { data } = await axios.get(`http://192.168.56.1:3000/api/materiales/all/${id}`);
+            const { data } = await axios.get(`http://192.168.3.9:3000/api/materiales/all/${id}`);
             setMateriales(data)
         } catch (error) {
             console.log(error)

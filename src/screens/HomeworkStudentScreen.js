@@ -51,6 +51,26 @@ const Page = () => {
     });
   }, [navigation]);
 
+  function calc(fechaString) {
+    // Convierte la cadena de fecha a un objeto Date
+    const fechaSeleccionada = new Date(fechaString);
+    // Obtiene la fecha actual
+    const fechaActual = new Date();
+    // Calcula la diferencia en milisegundos
+    const diferenciaEnMilisegundos = fechaSeleccionada - fechaActual;
+    // Calcula la diferencia en días
+    const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+    // Lógica de retorno basada en las condiciones proporcionadas
+    if (diferenciaEnDias === 0 || diferenciaEnDias === 1) {
+      return 'Urgente';
+    } else if (diferenciaEnDias >= 2 && diferenciaEnDias <= 3) {
+      return 'No tan urgente';
+    } else {
+      return 'Regular';
+    }
+  }
+
+
   return (
     <ScrollView>
       <View style={{ padding: 10 }}>
@@ -58,30 +78,29 @@ const Page = () => {
         <View style={styles.container}>
           {tareas.map((tarea) => (
             <Pressable
-              onPress={() =>
-                navigation.navigate("Descripción", {
-                  id: tarea.idTareas,
-                  curso: id,
-                })
-              }
               key={tarea.idTareas}
+              style={styles.homework}
+              onPress={() => navigation.navigate('Tarea', {
+                id: tarea.idTareas,
+                curso: id
+              })}
             >
-              <View style={styles.homework}>
-                <View>
-                  <Ionicons
-                    name="checkmark-circle-outline"
-                    size={24}
-                    color="black"
-                  />
-                </View>
-                <View style={{ width: 150 }}>
-                  <Text style={styles.homeworkTitle}>{tarea.nombre}</Text>
-                  <Text style={styles.homeworkTitle}>{tarea.descripcion}</Text>
-                  <Text style={styles.homeworkTitle}>
-                    {prioridad[Number(tarea.prioridad)]}
-                  </Text>
-                </View>
+              <View>
+                <Text style={styles.homeworkTitle}>{tarea.nombre}</Text>
+                <Text style={styles.homeworkTitle}>{tarea.descripcion}</Text>
               </View>
+              <Text
+                style={[
+                  styles.priorityText,
+                  calc(tarea.dateDelivery) === 'Urgente'
+                    ? styles.priorityUrgent
+                    : calc(tarea.dateDelivery) === 'No tan urgente'
+                      ? styles.priorityNotUrgent
+                      : styles.priorityRegular,
+                ]}
+              >
+                {calc(tarea.dateDelivery)}
+              </Text>
             </Pressable>
           ))}
         </View>

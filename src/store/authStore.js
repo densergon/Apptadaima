@@ -6,7 +6,8 @@ export const useAuthStore = create(persist(set => ({
   user: null,
   login: (userData) => set({ isAuthenticated: true, user: userData }),
   logout: () => set({
-    isAuthenticated: false, user: {
+    isAuthenticated: false,
+    user: {
       email: "",
       authToken: "",
       tipo_usuario: 3,

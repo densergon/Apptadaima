@@ -37,7 +37,7 @@ const ModalAddStudent = ({ visible, onHide, getStudents, id }) => {
                             </Pressable>
                         </View>
                         <Text style={styles.h1}>Inscribir alumno</Text>
-                        <TextInput style={styles.txtIpt} placeholder='Boleta del alumno' onChangeText={setBoleta} />
+                        <TextInput style={styles.txtIpt} placeholder='Boleta del alumno' value={boleta} onChangeText={setBoleta} />
                         <Pressable style={styles.addBtn} onPress={handleSubmit} >
                             <Text style={styles.addTxtBtn}>Inscribir</Text>
                         </Pressable>

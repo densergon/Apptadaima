@@ -23,7 +23,7 @@ const Page = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <ModalAddStudent visible={visible} onHide={() => setVisible(false)} getStudents={() => getStudents()} />
+            <ModalAddStudent visible={visible} onHide={() => setVisible(false)} getStudents={() => getStudents()} id={id} />
             <View>
                 <Pressable style={styles.btnAddStudent} onPress={() => setVisible(true)}>
                     <Text style={styles.btnTxt}>Inscribir alumno</Text>

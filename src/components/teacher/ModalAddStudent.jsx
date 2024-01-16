@@ -2,8 +2,7 @@ import { View, Text, TextInput, Pressable, Modal, StyleSheet, Alert } from 'reac
 import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-const ModalAddStudent = ({ visible, onHide, getStudents }) => {
-    const { id } = 5
+const ModalAddStudent = ({ visible, onHide, getStudents, id }) => {
     const [boleta, setBoleta] = useState('')
     const handleSubmit = async () => {
         console.log(boleta)

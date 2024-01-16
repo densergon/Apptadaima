@@ -62,7 +62,7 @@ const HomeworksScreen = ({ route }) => {
         <View style={styles.container}>
           {tareas.map((tarea) => (
             <View key={tarea.idTareas} style={styles.homework}>
-              <Pressable onPress={() => navigation.navigate("Entregadas", {
+              <Pressable onPress={() => navigation.navigate("Tarea", {
                 id: tarea.idTareas
               })}
                 key={tarea.idTareas}

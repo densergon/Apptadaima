@@ -52,7 +52,9 @@ const HomeworkScreen = ({ route }) => {
         <Text>{prioridad[homework.prioridad]}</Text>
       </View>
       <View style={style.btnsContainer}>
-        <Pressable style={[style.btn, style.btn]}>
+        <Pressable style={[style.btn, style.btn]} onPress={() => navigation.navigate('Entregadas', {
+          id: homework.idTareas
+        })}>
           <Text style={[style.btnTxt]}>Ver tareas entregadas</Text>
         </Pressable>
         <Pressable style={[style.btn, style.editBtn]}>

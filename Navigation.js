@@ -32,8 +32,6 @@ function MyDrawer() {
   const userType = useAuthStore.getState().user?.tipo_usuario; //--------------------------------------------------------ROL
 
   const isFocused = useIsFocused();
-  console.log("userType en DrawerNavigator:", userType);
-  console.log("isFocused en DrawerNavigator:", isFocused);
   return (
     <Drawer.Navigator initialRouteName="Mi perfil">
       <Drawer.Screen

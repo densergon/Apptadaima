@@ -43,7 +43,7 @@ const Page = () => {
       headerLeft: () => (
         <Pressable
           style={{ marginLeft: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('Welcome')}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>
@@ -80,7 +80,7 @@ const Page = () => {
             <Pressable
               key={tarea.idTareas}
               style={styles.homework}
-              onPress={() => navigation.navigate('Tarea', {
+              onPress={() => navigation.navigate('Descripción', {
                 id: tarea.idTareas,
                 curso: id
               })}

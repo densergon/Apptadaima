@@ -1,10 +1,13 @@
 //Descripcion Individual de la Tarea
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAuthStore } from "../store/authStore";
 import { AntDesign } from "@expo/vector-icons";
+import { fileDb } from "../config"
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import * as DocumentPicker from 'expo-document-picker';
 
 const Page = ({ route }) => {
   const focused = useIsFocused();
@@ -12,6 +15,51 @@ const Page = ({ route }) => {
   const { id } = route.params;
   const idUsuario = useAuthStore().user?.id_usuario;
   const [tarea, setTarea] = useState([]);
+  const [descripcion, setDescripcion] = useState('')
+  const pickDocument = async () => {
+    try {
+      const documentResult = await DocumentPicker.getDocumentAsync({
+        type: 'application/pdf',
+
+      });
+
+      if (documentResult.type != 'canceled') {
+        const uriuploaded = await uploadToFirebaseStorage(documentResult.assets[0].uri, documentResult.assets[0].name);
+        const tareaEntregada = {
+          idUsuario,
+          idTarea: id,
+          uri: uriuploaded,
+          descripcion
+        };
+        console.log(tareaEntregada)
+
+        const result = await axios.post(
+          `http://192.168.3.9:3000/api/delivered/`,
+          tareaEntregada
+        );
+        console.log(result.data);
+        if (result.status == 200) {
+          Alert.alert('Entregado exitosamente');
+        }
+      } else {
+        console.log('Se canceló la selección del documento');
+      }
+    } catch (error) {
+      console.error('Error al seleccionar el documento:', error);
+    }
+  }
+  const uploadToFirebaseStorage = async (uri, fileName) => {
+    const fileRef = ref(fileDb, fileName);
+    const res = await fetch(uri);
+    const fileBlob = await res.blob();
+    // Sube el archivo y obtén la referencia del snapshot
+    const snapshot = await uploadBytes(fileRef, fileBlob);
+
+    // Obtiene la URL de descarga del archivo
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    return downloadURL;
+  };
+
 
   const getTarea = async () => {
     try {
@@ -34,7 +82,7 @@ const Page = ({ route }) => {
       headerLeft: () => (
         <Pressable
           style={{ marginLeft: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('Welcome')}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>
@@ -42,23 +90,6 @@ const Page = ({ route }) => {
     });
   }, [navigation]);
 
-  const entregar = async () => {
-    const tareaEntregada = {
-      idUsuario,
-      idTarea: id,
-      uri: "",
-    };
-    try {
-      const response = await axios.post(
-        `http://192.168.3.9:3000/api/delivered/`,
-        tareaEntregada
-      );
-      console.log(response.data);
-      navigation.replace("HomeworkStudentScreen");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <View>
@@ -73,7 +104,8 @@ const Page = ({ route }) => {
             </Text>
           </View>
           <View>
-            <Pressable style={style.btn} onPress={entregar}>
+            <TextInput placeholder="Agregar detalles" value={descripcion} onChangeText={setDescripcion} />
+            <Pressable style={style.btn} onPress={pickDocument}>
               <Text style={style.btnTxt}>Entregar tarea</Text>
             </Pressable>
           </View>

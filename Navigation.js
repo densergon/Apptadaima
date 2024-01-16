@@ -91,6 +91,7 @@ function MyDrawer() {
           drawerLabelStyle: {
             height: 0,
           },
+          title: 'Tareas del curso'
         }}
       />
       <Drawer.Screen

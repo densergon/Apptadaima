@@ -9,32 +9,40 @@ import { AntDesign } from "@expo/vector-icons";
 import HomeworkDescriptionScreen from "../screens/HomeworkDescriptionScreen";
 
 const Page = () => {
-  const focused = useIsFocused();
   const navigation = useNavigation();
   const id = useAuthStore.getState().user?.id_usuario;
-  const prioridad = ["Urgente", "Normal", "No urgente", "Opcional"];
   const [tareas, setTareas] = useState([]);
+  const [entregadas, setEntregadas] = useState([])
+
 
   const focus = useIsFocused();
+  const fetchTareas = async () => {
+    try {
+      const response = await axios.get(
+        `http://192.168.3.9:3000/api/homeworks/current/${id}`
+      );
+      const tareasOrdenadas = response.data.sort((a, b) => {
+        const dateA = new Date(a.dateDelivery);
+        const dateB = new Date(b.dateDelivery);
+        return dateA.getTime() - dateB.getTime();
+      });
+      setTareas(tareasOrdenadas);
+    } catch (error) {
+      console.error("Error al obtener las tareas:", error);
+    }
+  };
+  const getEntregadas = async () => {
+    try {
+      const response = await axios.get(`http://192.168.3.9:3000/api/homeworks/delivered/${id}`)
+      setEntregadas(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    const fetchTareas = async () => {
-      try {
-        const response = await axios.get(
-          `http://192.168.3.9:3000/api/homeworks/current/${id}`
-        );
-        const tareasOrdenadas = response.data.sort((a, b) => {
-          const dateA = new Date(a.dateDelivery);
-          const dateB = new Date(b.dateDelivery);
-          return dateA.getTime() - dateB.getTime();
-        });
-        setTareas(tareasOrdenadas);
-      } catch (error) {
-        console.error("Error al obtener las tareas:", error);
-      }
-    };
-
     fetchTareas();
+    getEntregadas();
   }, [focus]);
 
   useEffect(() => {
@@ -104,6 +112,23 @@ const Page = () => {
             </Pressable>
           ))}
         </View>
+        <Text style={styles.h1}>Tareas Entregadas</Text>
+        {
+          entregadas.map((tarea) => (
+            <View
+              key={tarea.idTareas}
+              style={styles.homework}
+            >
+              <View>
+                <Text style={styles.homeworkTitle}>{tarea.nombre}</Text>
+                <Text style={styles.homeworkTitle}>{tarea.descripcion}</Text>
+              </View>
+              <Text style={styles.homeworkTitle}>
+                {tarea.calificacion}
+              </Text>
+            </View>
+          ))
+        }
       </View>
     </ScrollView>
   );

@@ -2,8 +2,7 @@ import { View, Text, TextInput, Pressable, Modal, StyleSheet, Alert } from 'reac
 import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
-const ModalAddStudent = ({ visible, onHide, getStudents }) => {
-    const { id } = 5
+const ModalAddStudent = ({ visible, onHide, getStudents, id }) => {
     const [boleta, setBoleta] = useState('')
     const handleSubmit = async () => {
         console.log(boleta)
@@ -38,7 +37,7 @@ const ModalAddStudent = ({ visible, onHide, getStudents }) => {
                             </Pressable>
                         </View>
                         <Text style={styles.h1}>Inscribir alumno</Text>
-                        <TextInput style={styles.txtIpt} placeholder='Boleta del alumno' onChangeText={setBoleta} />
+                        <TextInput style={styles.txtIpt} placeholder='Boleta del alumno' value={boleta} onChangeText={setBoleta} />
                         <Pressable style={styles.addBtn} onPress={handleSubmit} >
                             <Text style={styles.addTxtBtn}>Inscribir</Text>
                         </Pressable>

@@ -48,4 +48,17 @@ export const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  priorityUrgent: {
+    color: 'red',
+  },
+
+  // Estilos para prioridad "No tan urgente"
+  priorityNotUrgent: {
+    color: 'yellow',
+  },
+
+  // Estilos para prioridad "Regular"
+  priorityRegular: {
+    color: 'gray',
+  },
 });

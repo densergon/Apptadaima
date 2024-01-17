@@ -32,6 +32,23 @@ const CourseHomeworks = ({ route }) => {
     useEffect(() => {
         getTareas();
     }, [focused]);
+    function calc(fechaString) {
+        // Convierte la cadena de fecha a un objeto Date
+        const fechaSeleccionada = new Date(fechaString);
+        // Obtiene la fecha actual
+        const fechaActual = new Date();
+        // Calcula la diferencia en milisegundos
+        const diferenciaEnMilisegundos = fechaSeleccionada - fechaActual;
+        // Calcula la diferencia en días
+        const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+        if (diferenciaEnDias === 0 || diferenciaEnDias === 1) {
+            return 'Urgente';
+        } else if (diferenciaEnDias >= 2 && diferenciaEnDias <= 3) {
+            return 'No tan urgente';
+        } else {
+            return 'Regular';
+        }
+    }
 
     return (
         <ScrollView>

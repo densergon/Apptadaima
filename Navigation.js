@@ -15,6 +15,10 @@ import ManageCoursesScreen from "./src/screens/ManageCoursesScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import FacebookPage from "./src/screens/News";
 import CourseHomeworks from "./src/screens/CourseHomeworks";
+import DeliveredHomework from "./src/screens/DeliveredHomework"
+import DeliveredHomeworks from "./src/screens/DeliveredHomeworks"
+import CourseStudents from "./src/screens/CourseStudents"
+import HomeworkScreen from "./src/screens/HomeworkScreen"
 import DeliveredHomeworks from "./src/screens/DeliveredHomeworks"
 
 //Icons
@@ -91,6 +95,18 @@ function MyDrawer() {
           drawerLabelStyle: {
             height: 0,
           },
+          title: 'Tareas del curso'
+        }}
+      />
+      <Drawer.Screen
+        name="Tarea"
+        component={HomeworkScreen}
+        initialParams={{ id: 1 }}
+        options={{
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
         }}
       />
       <Drawer.Screen
@@ -121,7 +137,10 @@ function MyDrawer() {
         name="Welcome"
         component={WelcomeScreen}
         options={{
-          drawerLabel: "Inicio",
+          drawerLabel: "",
+          drawerLabelStyle: {
+            height: 0,
+          },
           title: "",
         }}
       />
@@ -134,17 +153,6 @@ function MyDrawer() {
             height: 0,
           },
           title: "",
-        }}
-      />
-      <Drawer.Screen
-        name="TareaEntregada"
-        component={DeliveredHomework}
-        options={{
-          drawerLabel: "",
-          drawerLabelStyle: {
-            height: 0,
-          },
-          title: "Detalles",
         }}
       />
       <Drawer.Screen

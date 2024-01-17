@@ -19,7 +19,7 @@ const ManageCoursesScreen = () => {
   const fetchClases = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.56.1:3000/api/classes/all/${idProfesor}`
+        `http://192.168.3.9:3000/api/classes/all/${idProfesor}`
       );
       console.log(idProfesor);
       setClases(response.data);

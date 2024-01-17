@@ -56,37 +56,32 @@ const WelcomeScreen = () => {
             greeting = 'Bienvenido';
             break;
     }
-    const focused = useIsFocused()
-    useEffect(() => {
-        getData()
-    }, [focused]);
 
     return (
-        <View style={styles.container} >
-            <View style={styles.header}>
-                <Text style={styles.h1}>Mis datos</Text>
-            </View>
-            <View style={styles.dataContainer}>
-                <View style={styles.dataContainer}>
-                    <View style={styles.box}>
-                        <Text style={styles.p}>Nombre:</Text>
-                        {user ? <Text style={styles.p}>{user?.nombre} {user?.apellidoPaterno} {user?.apellidoMaterno}</Text> : <Text></Text>}
-                    </View>
-                    <View style={styles.box}>
-                        <Text style={styles.p}>Email:</Text>
-                        <Text style={styles.p}>{user?.email}</Text>
-                    </View>
-                </View>
-
-            </View>
-            <View>
-                {btn}
-            </View>
+        <View>
+            <Text>{greeting}</Text>
         </View>
     )
 }
 
 export default WelcomeScreen;
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+    },
+    logOutBtn: {
+        padding: 15,
+        borderRadius: 10,
+        backgroundColor: '#e74c3c'
+    },
+    logOutTxt: {
+        color: 'white',
+        fontWeight: '500'
+    }
+})
 
 const styles = StyleSheet.create({
     container: {

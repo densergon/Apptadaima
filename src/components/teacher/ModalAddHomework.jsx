@@ -11,10 +11,8 @@ if (Platform.OS === 'web') {
 }
 
 const ModalAddHomework = ({ visible, onHide, getData, route }) => {
-
   const { id } = route.params;
-  const [date, setDate] = useState(new Date());
-  const [deliveryDate, setDeliveryDate] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [prioridad, setPrioridad] = useState(0);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('')
@@ -24,7 +22,6 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
     descripcion,
     dateDelivery: convertirFormatoFecha(deliveryDate),
     curso: Number(id),
-    prioridad
   }
 
   function convertirFormatoFecha(fechaOriginal) {
@@ -47,7 +44,10 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
 
 
 
+
+
   const HandleSubmit = async () => {
+    console.log(Homework)
     try {
       await axios.post('http://192.168.3.9:3000/api/homeworks', Homework);
       getData()
@@ -56,6 +56,7 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
       console.log(error)
     }
   }
+
 
   return (
     <Modal
@@ -104,6 +105,7 @@ const ModalAddHomework = ({ visible, onHide, getData, route }) => {
     </Modal>
   );
 };
+
 
 
 const styles = StyleSheet.create({

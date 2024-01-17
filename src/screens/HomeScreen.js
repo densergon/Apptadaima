@@ -1,6 +1,5 @@
-import { Text, SafeAreaView, StyleSheet, Pressable } from 'react-native'
+import { Text, SafeAreaView, StyleSheet } from 'react-native'
 import React from 'react'
-import { Link } from '@react-navigation/native'
 
 const HomeScreen = () => {
     return (

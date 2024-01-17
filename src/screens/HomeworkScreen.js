@@ -1,14 +1,16 @@
 //Ver tareas PROFESOR
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import ModalEditHomework from "../components/teacher/ModalEditHomework";
 
 const HomeworkScreen = ({ route }) => {
   const focused = useIsFocused();
   const navigation = useNavigation();
   const { id, curso } = route.params;
   const prioridad = ["Opcional", "Regular", "Urgente"];
+  const [visible, setVisible] = useState(false)
   const [homework, setHomework] = useState({
     idTareas: 0,
     nombre: "",
@@ -24,15 +26,21 @@ const HomeworkScreen = ({ route }) => {
     );
     setHomework(response.data);
   };
+
+  const editHomework = async () => {
+    setVisible(true)
+  }
   const deleteHomework = async () => {
     const response = await axios.delete(
       `http://192.168.3.9:3000/api/homeworks/${id}`
     );
-    console.log(response.data)
-    if (response.data.message == "Eliminada exitosamente") {
+    if (response.data.message == "No se pudo borrar") {
+      console.log('Alert faked')
+    }
+    if (response.data.message == "Borrado exitosamente") {
       //router.push('/teacher/manageClasses')
       navigation.navigate("ListarTareas", {
-        id: curso,
+        id: homework.curso,
       })
     }
   };
@@ -57,13 +65,14 @@ const HomeworkScreen = ({ route }) => {
         })}>
           <Text style={[style.btnTxt]}>Ver tareas entregadas</Text>
         </Pressable>
-        <Pressable style={[style.btn, style.editBtn]}>
+        <Pressable style={[style.btn, style.editBtn]} onPress={editHomework}>
           <Text style={[style.btnTxt]}>Editar</Text>
         </Pressable>
         <Pressable style={[style.btn, style.delBtn]} onPress={deleteHomework}>
           <Text style={[style.btnTxt]}>Eliminar</Text>
         </Pressable>
       </View>
+      <ModalEditHomework visible={visible} onHide={() => setVisible(false)} getData={() => getHomework()} idTarea={homework.idTareas} idCurso={id} />
     </View>
   );
 };

@@ -18,8 +18,6 @@ import CourseHomeworks from "./src/screens/CourseHomeworks";
 import DeliveredHomework from "./src/screens/DeliveredHomework"
 import DeliveredHomeworks from "./src/screens/DeliveredHomeworks"
 import CourseStudents from "./src/screens/CourseStudents"
-import HomeworkScreen from "./src/screens/HomeworkScreen"
-import DeliveredHomeworks from "./src/screens/DeliveredHomeworks"
 
 //Icons
 import { AntDesign } from "@expo/vector-icons";
@@ -30,7 +28,6 @@ import DisplayMaterialScreen from "./src/screens/DisplayMaterialScreen";
 import HomeworksScreen from "./src/screens/HomeworksScreen";
 import MaterialListScreenStudent from "./src/screens/MaterialListScreenStudent";
 import HomeworkScreen from "./src/screens/HomeworkScreen";
-import DeliveredHomework from "./src/screens/DeliveredHomework"
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -137,10 +134,7 @@ function MyDrawer() {
         name="Welcome"
         component={WelcomeScreen}
         options={{
-          drawerLabel: "",
-          drawerLabelStyle: {
-            height: 0,
-          },
+          drawerLabel: "Inicio",
           title: "",
         }}
       />
@@ -158,17 +152,6 @@ function MyDrawer() {
       <Drawer.Screen
         name="Descripción"
         component={HomeworkDescriptionScreen}
-        options={{
-          drawerLabel: "",
-          drawerLabelStyle: {
-            height: 0,
-          },
-          title: "",
-        }}
-      />
-      <Drawer.Screen
-        name="Tarea"
-        component={HomeworkScreen}
         options={{
           drawerLabel: "",
           drawerLabelStyle: {
